@@ -61,6 +61,17 @@ fn main() {
     });
 
     cfg.skip_const(move |s| {
+        if version < 71 {
+            match s {
+                "CURLOPT_SSLCERT_BLOB"
+                | "CURLOPT_SSLKEY_BLOB"
+                | "CURLOPT_PROXY_SSLCERT_BLOB"
+                | "CURLOPT_PROXY_SSLKEY_BLOB"
+                | "CURLOPT_ISSUERCERT_BLOB" => return true,
+                _ => {}
+            }
+        }
+
         if version < 70 {
             match s {
                 "CURL_VERSION_HTTP3"
